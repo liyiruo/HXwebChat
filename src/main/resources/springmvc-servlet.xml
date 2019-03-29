@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<!--
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/cache" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+-->
+<!--扫描controller注解-->
+    <context:component-scan base-package="com.webChat.controller"></context:component-scan>
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <!--<mvc:resources mapping="/statics/**/" location="/statics/"></mvc:resources>-->
+   <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>-->
+<!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+<!--
+     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+         &lt;!&ndash;<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">&ndash;&gt;
+             &lt;!&ndash;<property name="maxUploadSize" value="5000000"/>&ndash;&gt;
+             &lt;!&ndash;<property name="defaultEncoding" value="UTF-8"/>&ndash;&gt;
+         &lt;!&ndash;</bean>&ndash;&gt;
+         &lt;!&ndash;&lt;!&ndash;声明增强方法所在的Bean&ndash;&gt;&ndash;&gt;
+         &lt;!&ndash;<bean class="com.bdqn.aop.ControllerLogger" id="logger"></bean>&ndash;&gt;
+         &lt;!&ndash;配置切面&ndash;&gt;
+         <aop:config>
+             &lt;!&ndash;定义切入点&ndash;&gt;
+             <aop:pointcut id="pointcut" expression="execution(* com.wlglxt.controller.*.* (..))"></aop:pointcut>
+             &lt;!&ndash;引入包含增强方法得bean&ndash;&gt;
+             <aop:aspect ref="logger">
+                 <aop:before method="before" pointcut-ref="pointcut"></aop:before>
+                 <aop:after-returning method="after" pointcut-ref="pointcut" returning="result"></aop:after-returning>
+             </aop:aspect>
+         </aop:config>
+     </bean>
+    -->
+</beans>
