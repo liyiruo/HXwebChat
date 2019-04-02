@@ -11,7 +11,7 @@
     <title>登录页面</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/server/login" id="form6">
+<form action="${pageContext.request.contextPath}/server/login" id="form6" method="post">
     <table align="center" border="1" style="border-color: aqua">
         <tr>
             <td>账号</td>
@@ -23,7 +23,7 @@
         </tr>
         <tr align="center" >
 
-            <td colspan="2" ><button type="submit">log</button><button type="reset">reset</button></td>
+            <td colspan="2" align="center"><button type="submit">log</button><button type="reset">reset</button></td>
         </tr>
 
     </table>

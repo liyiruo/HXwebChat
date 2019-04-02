@@ -3,14 +3,16 @@ package com.webChat.webSocket;
 
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+import sun.text.resources.FormatData;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Map;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ServerEndpoint("/websocket/{username}")
@@ -119,6 +121,13 @@ public class WebSocket {
 
         logger.info("in @onMessage");
         logger.info("username======================================>" + username);
+/*
+        JSONObject messageJson = JSONObject.fromObject(data);
+        JSONObject message = messageJson.optJSONObject("message");
+//        message 里存的有from to  content  time
+        String to = message.optString("to");
+        String from = message.optString("from");
+*/
         //接收值
         String msg = (String) JSONObject.fromObject(data).optJSONObject("data").get("content");
         String from = (String) JSONObject.fromObject(data).optJSONObject("data").get("from");
@@ -137,6 +146,9 @@ public class WebSocket {
                 JSONObject returnData = new JSONObject();
                 String message = "您的专属客服一下线请重新刷新浏览器，重新获取专属客服";
                 returnData.put("message", message);
+                returnData.put("from", "系统消息");
+                returnData.put("to", from);
+                returnData.put("time", getCurrentdate());
                 //谁发来的，发给谁
                 sendMessageTo(returnData.toString(), from);
             }
@@ -158,6 +170,7 @@ public class WebSocket {
         returnData.put("time", time);
         //把信息发送给接收者
         sendMessageTo(returnData.toString(), to);
+        sendMessageTo(returnData.toString(), from);
         logger.info("sended");
     }
 
@@ -216,9 +229,9 @@ public class WebSocket {
 
     //给一个serverName 则更新ta的客户列表
     public void updateList(String serverName) throws IOException {
-        Object object = OnlineUtil.getGuestList(mapOfList, serverName);
+        ArrayList<String> guestList = (ArrayList<String>) OnlineUtil.getGuestList(mapOfList, serverName);
         JSONObject returnData = new JSONObject();
-        returnData.put("guestList", object);
+        returnData.put("guestList", guestList);
         sendMessageTo(returnData.toString(), serverName);
     }
 
@@ -237,6 +250,14 @@ public class WebSocket {
             sendMessageTo(returnData.toString(), guestName);
         }
     }
+
+    public String getCurrentdate() {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
 
 
 }

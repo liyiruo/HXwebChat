@@ -3,6 +3,7 @@ package com.webChat.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -17,7 +18,7 @@ public class ServerLogin {
     }
 
 
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ModelAndView login(String serverName, String password, HttpSession session){
 
         //省去校验用户名 密码

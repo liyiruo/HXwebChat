@@ -15,6 +15,4 @@ public class OnlineUtil {
         }
         return keyList;
     }
-
-
 }
